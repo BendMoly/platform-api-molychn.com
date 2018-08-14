@@ -1,2 +1,2 @@
 # platform-api-molychn.com
-molychn.comAPI管理平台
+molychn.com API 管理平台
