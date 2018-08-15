@@ -23,6 +23,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-mount": "^3.0.0",
     "koa-router": "^7.4.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "mongodb": "^3.1.3"
   }
 }
