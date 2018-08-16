@@ -13,8 +13,10 @@ const login = async (ctx) => {
       ctx.response.status = 200
       ctx.response.body = 'login success'
     } else {
-      ctx.response.status = 401
-      ctx.response.body = '账号或密码错误'
+      ctx.response.status = 403
+      ctx.response.body = {
+        message: 'Incorrect account or password'
+      }
     }
     // let dbase = connectDB.db('molychn')
     // dbase.collection('user').find(data).toArray((err, res) => {
