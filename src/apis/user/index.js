@@ -1,12 +1,10 @@
-const Router = require('koa-router')
+import User from './v1/User'
+import Router from 'koa-router'
 const user = new Router({
   prefix: '/admin/v1/user'
 })
 
-// 方法引入
-const login = require('./methods/login.js')
-
 // 用户登录
-user.post('/login', login)
+user.post('/login', User.login)
 
-module.exports = user
+export default user

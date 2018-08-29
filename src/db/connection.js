@@ -1,11 +1,10 @@
-const mongoConf = require('./db.conf')
-const MongoClient = require('mongodb').MongoClient
+import mongoConf from '../config/index'
+import mongodb from 'mongodb'
 
-let url = `mongodb://localhost:${mongoConf.PORT}/${mongoConf.databaseName}`
-
+const mc = mongodb.MongoClient
 const connection = () => {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(url, (err, db) => {
+    mc.connect(mongoConf.database, (err, db) => {
       if (err) {
         reject(err)
         throw err
@@ -16,4 +15,4 @@ const connection = () => {
   })
 }
 
-module.exports = connection
+export default connection
