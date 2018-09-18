@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose'
+import mongoose from 'mongoose'
 import chalk from 'chalk'
 import config from '../config/index'
 

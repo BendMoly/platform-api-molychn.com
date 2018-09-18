@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
-import connection from '../../../db/connection'
+import connection from '../../db/connection'
 
 class User {
   constructor () {}

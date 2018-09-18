@@ -1,5 +1,5 @@
-import User from './v1/User'
 import Router from 'koa-router'
+import User from '../../methods/v1/User'
 const user = new Router({
   prefix: '/admin/v1/user'
 })
