@@ -5,10 +5,15 @@ let secretKey = '3Ci5oBnYmSnkt-Zf2mB4FVD20ioRALqy0b1faEuE'
 let mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
 
 const options = {
-  scope: 'blog-src'
+  scope: 'blog-src',
+  callbackUrl: 'http://molychn.com:12580/v1/upload',
+  callbackBody: 'name=$(fname)&width=$(imageInfo.width)&height=$(imageInfo.height)'
 }
 
 let putPolicy = new qiniu.rs.PutPolicy(options)
-let uploadToken = putPolicy.uploadToken(mac)
 
-export default uploadToken
+const generateToken = () => {
+  return putPolicy.uploadToken(mac)
+}
+
+export default generateToken

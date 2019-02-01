@@ -14,6 +14,7 @@ import articles from './apis/articles'
 import articlesNoAuth from './apis/articles/index_noauth'
 import columns from './apis/columns'
 import upload from './apis/upload'
+import { upload_noauth } from './apis/upload'
 
 const app = new Koa()
 app.use(bodyParser())
@@ -31,7 +32,7 @@ app.use(columns.routes())
 
 app.use(articlesNoAuth.routes())
 app.use(upload.routes())
-// app.use(test.routes())
+app.use(upload_noauth.routes())
 
 export default app.listen(configuration.PORT, '0.0.0.0', () => {
   console.log(`app start at port ${configuration.PORT}`)

@@ -10,6 +10,7 @@ const articlesSchema = new mongoose.Schema({
   columnName: String,
   tags: Object,
   abstract: String,
+  banner: String,
   content: String
 }, {
   versionKey: false

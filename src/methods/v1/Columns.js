@@ -1,5 +1,6 @@
 import Columns from '../../db/models/columns'
 import chalk from 'chalk'
+import { databaseFind, databaseSave } from '../../utils/databaseOp'
 
 class Column {
   constructor () {}
@@ -26,30 +27,6 @@ class Column {
       ctx.success(204)
     }
   }
-}
-
-const databaseSave = (model) => {
-  return new Promise((resolve, reject) => {
-    model.save((err) => {
-      if (err) {
-        console.error(chalk.red(err))
-        reject(err)
-      }
-      console.log(chalk.green('databaseOP success'))
-      resolve(true)
-    })
-  })
-}
-const databaseFind = (schema, params = {}, cols = null, condition = {}) => {
-  return new Promise((resolve, reject) => {
-    schema.find(params, cols, condition, (err, res) => {
-      if (err) {
-        console.error(chalk.red(err))
-        reject(err)
-      }
-      resolve(res)
-    })
-  })
 }
 
 export default new Column()
