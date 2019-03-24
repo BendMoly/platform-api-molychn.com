@@ -6,7 +6,6 @@ class Upload {
   constructor () {}
 
   async token (ctx) {
-    console.log(11)
     ctx.success(200, generateToken())
   }
 

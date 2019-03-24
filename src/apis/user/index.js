@@ -1,7 +1,7 @@
 import Router from 'koa-router'
-import User from '../../methods/v1/User'
+import User from '../../methods/v2/User'
 const user = new Router({
-  prefix: '/admin/v1/user'
+  prefix: '/admin/v2'
 })
 
 // 用户登录

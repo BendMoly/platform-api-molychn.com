@@ -1,16 +1,20 @@
 import Router from 'koa-router'
-import Upload from '../methods/v1/Upload'
+import Upload from '../methods/v2/Upload'
 
 const upload = new Router({
-  prefix: '/admin/v1'
+  prefix: '/admin/v2'
 })
 const upload_noauth = new Router({
-  prefix: '/v1'
+  prefix: '/v2'
 })
 
-upload.get('/upload', Upload.token)
-upload.get('/uploads', Upload.list)
-upload_noauth.post('/upload', Upload.callback)
+upload
+.get('/upload', Upload.token)
+.get('/uploads', Upload.list)
+.delete('/uploads', Upload.delete)
+
+upload_noauth
+.post('/upload', Upload.callback)
 
 export default upload
 export { upload_noauth }
