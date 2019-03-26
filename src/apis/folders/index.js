@@ -8,5 +8,6 @@ const folders = new Router({
 folders
 .post('/folders', Folders.insert)
 .get('/folders', Folders.list)
+.delete('/folders/:id', Folders.delete)
 
 export default folders

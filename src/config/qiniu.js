@@ -14,7 +14,7 @@ const bucketManager = new qiniu.rs.BucketManager(mac, config)
 const options = {
   scope: 'blog-src',
   callbackUrl: 'http://molychn.com:12580/v2/upload',
-  callbackBody: 'name=$(fname)&width=$(imageInfo.width)&height=$(imageInfo.height)',
+  callbackBody: '{"name":"$(fname)","width":"$(imageInfo.width)","height":"$(imageInfo.height)"}',
   callbackBodyType: 'application/json'
 }
 

@@ -24,19 +24,18 @@ class Sql {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.findUser, [account, password], (err, result) => {
+          connection.release()
           if (err) {
-            connection.release()
+            console.log(err)
             reject(err)
           }
           if (!!result.length) {
             console.log(result)
-            connection.release()
             resolve({
               account: result[0].account,
               role: result.role
             })
           } else {
-            connection.release()
             resolve(false)
           }
         })
@@ -54,6 +53,7 @@ class Sql {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.checkFolders, (err, result) => {
+          connection.release()
           if (result) {
             let resJson = []
             for (let i = 0; i < result.length; i++) {
@@ -63,7 +63,6 @@ class Sql {
               }
               resJson.push(o)
             }
-            connection.release()
             resolve(resJson)
           }
         })
@@ -82,16 +81,15 @@ class Sql {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.checkOneFolder, [name], (err, result) => {
+          connection.release()
           console.log(result)
           if (!!result.length) {
-            connection.release()
             resolve(false)
           } else {
             console.log('新增栏目进行中')
             connection.query(sql.insertFolder, [name], (err, res) => {
               if (err) reject(err)
               if (res) {
-                connection.release()
                 resolve(true)
               }
             })
@@ -111,6 +109,7 @@ class Sql {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.checkUploads, (err, result) => {
+          connection.release()
           if (result.length) {
             let resJson = []
             for (let i = 0; i < result.length; i++) {
@@ -121,10 +120,8 @@ class Sql {
               }
               resJson.push(o)
             }
-            connection.release()
             resolve(resJson)
           } else {
-            connection.release()
             resolve([])
           }
         })
@@ -132,15 +129,21 @@ class Sql {
     })
   }
 
+  /**
+   * @description 上传新素材
+   * @param {string} url
+   * @param {string} name
+   * @param {boolean} banner
+   */
   async insertUploads (url, name, banner) {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.insertUploads, [url, name, banner], (err, result) => {
+          connection.release()
           if (err) {
             resolve(false)
           }
           if (result) {
-            connection.release()
             resolve(true)
           }
         })
@@ -148,6 +151,10 @@ class Sql {
     })
   }
 
+  /**
+   * @description 插入新文章
+   * @param {string} article
+   */
   async insertArticle (article) {
     return new Promise((resolve, reject) => {
       let {title, folder, abstract, cover = null, content} = article
@@ -158,9 +165,9 @@ class Sql {
       let date = Math.floor(Date.now() / 1000)
       pool.getConnection((err, connection) => {
         connection.query(sql.insertArticle, [uuid, title, folder, date, abstract, cover, content], (err, result) => {
+          connection.release()
           if (err) reject(err)
           if (result) {
-            connection.release()
             resolve(true)
           }
         })
@@ -168,6 +175,14 @@ class Sql {
     })
   }
 
+  /**
+   * @description 根据页码，类型，搜索字符以及时间等相关因素查找文章列表
+   * @param {number} currentPage
+   * @param {string} type
+   * @param {string} text
+   * @param {number} start
+   * @param {number} end
+   */
   async checkArticles (currentPage = 1, type = null, text = null, start = null, end = null) {
     return new Promise((resolve, reject) => {
       // 整理查询列表语句
@@ -213,6 +228,7 @@ class Sql {
         console.log(targetSql)
         pool.getConnection((err, connection) => {
           connection.query(targetSql.sql, targetSql.params, (err, result) => {
+            connection.release()
             if (err) {
               console.log(err)
               reject(err)
@@ -243,13 +259,67 @@ class Sql {
     })
   }
 
+  /**
+   * @description 查找文章详情
+   * @param {string} id
+   */
+  async checkArticle (id) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, connection) => {
+        connection.query(sql.checkArticle, [id], (error, res) => {
+          connection.release()
+          if (error) reject(error)
+          if (res) {
+            resolve(res[0])
+          }
+        })
+      })
+    })
+  }
+
+  async delArticle (id) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, connection) => {
+        connection.query(sql.delArticle, [id], (error, res) => {
+          connection.release()
+          if (error) reject(error)
+          if (res) {
+            resolve(true)
+          }
+        })
+      })
+    })
+  }
+
+  /**
+   * @description 删除图片素材
+   * @param {string} name
+   */
   async delUploadFile (name) {
     return new Promise((resolve, reject) => {
       pool.getConnection((err, connection) => {
         connection.query(sql.delUploadFile, [name], (error, result) => {
+          connection.release()
           if (error) reject(error)
           if (result) {
-            connection.release()
+            resolve(true)
+          }
+        })
+      })
+    })
+  }
+
+  /**
+   * @description 删除栏目
+   * @param {String} id
+   */
+  async deleteFolder (id) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, connection) => {
+        connection.query(sql.deleteFolder, [id], (error, result) => {
+          connection.release()
+          if (error) reject(error)
+          if (result) {
             resolve(true)
           }
         })
@@ -290,6 +360,7 @@ const countArticles = async (type = null, text = null, start = null, end = null)
     pool.getConnection((err, connection) => {
       console.log(type == 'date' ? [Math.floor(start / 1000), Math.floor(end / 1000)] : [text])
       connection.query(targetSql, type == 'date' ? [Math.floor(start / 1000), Math.floor(end / 1000)] : [text], (err, res) => {
+        connection.release()
         if (res) {
           resolve(res[0].c)
         }

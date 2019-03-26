@@ -32,9 +32,10 @@ class Upload {
   // }
 
   async callback (ctx) {
+    console.log('qiniu callback is coming')
     const default_src = 'http://qiniu.molychn.com'
     let {name, width, height} = ctx.request.body
-    let res = await connect.insertUploads(`${default_src}/${name}`, width / height < 4 ? 0 : 1)
+    let res = await connect.insertUploads(`${default_src}/${name}`, name, width / height < 4 ? 0 : 1)
     if (res) {
       console.log(res)
       ctx.success(200, {

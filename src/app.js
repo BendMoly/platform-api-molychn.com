@@ -15,7 +15,7 @@ import mysql from './mysql'
 
 // interface
 import user from './apis/user'
-import articles from './apis/articles'
+import articles, {unauthArticles} from './apis/articles'
 // import articlesNoAuth from './apis/articles/index_noauth'
 import folders from './apis/folders'
 import upload from './apis/upload'
@@ -49,7 +49,7 @@ app.use(user.routes())
 app.use(articles.routes())
 app.use(folders.routes())
 
-// app.use(articlesNoAuth.routes())
+app.use(unauthArticles.routes())
 app.use(upload.routes())
 app.use(upload_noauth.routes())
 

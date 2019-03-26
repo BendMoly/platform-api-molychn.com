@@ -3,10 +3,12 @@ const sql = {
   findUser: 'SELECT * FROM users WHERE account = ? AND password = ?',
   // 查询栏目列表
   checkFolders: 'SELECT * FROM folders',
-  // 查询栏目列表制定栏目
+  // 查询栏目列表指定栏目
   checkOneFolder: 'SELECT * FROM folders WHERE name = ?',
   // 插入新栏目
   insertFolder: 'INSERT INTO folders (name) VALUES (?)',
+  // 删除栏目
+  deleteFolder: 'DELETE FROM folders WHERE id = ?',
   // 查找上传目录
   checkUploads: 'SELECT * FROM uploads',
   // 添加Uploads文件
@@ -21,6 +23,10 @@ const sql = {
   checkArticlesByTitle: 'SELECT * FROM articles WHERE title like "%"?"%" limit ?, ?',
   // 文章列表时间范围查询
   checkArticlesByTimeScope: 'SELECT * FROM articles WHERE date BETWEEN ? AND ? limit ?, ?',
+  // 文章详情
+  checkArticle: 'SELECT * FROM articles WHERE uuid = ?',
+  // 删除文章
+  delArticle: 'DELETE FROM articles WHERE uuid = ?',
   // 删除上传的图片文件
   delUploadFile: 'DELETE FROM uploads WHERE name = ?'
 }

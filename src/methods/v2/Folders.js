@@ -27,6 +27,17 @@ class Folders {
     }
   }
 
+  async delete (ctx) {
+    let id = ctx.params.id
+    console.log(`id:${id}`)
+    let res = await connect.deleteFolder(id)
+    if (res) {
+      ctx.success(204)
+    } else {
+      ctx.error(403, `the ${id} of folder may not exist`)
+    }
+  }
+
 }
 
 export default new Folders()
