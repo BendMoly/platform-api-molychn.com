@@ -12,6 +12,7 @@ const pool = mysql.createPool(config.mysql)
 class Sql {
   constructor () {}
 
+  // 我测试一下git同步拉取
   /**
    * @description 用户登录sql
    * @param {账号} account
