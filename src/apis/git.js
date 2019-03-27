@@ -6,7 +6,11 @@ const git = new Router()
 git
 .post('/gitpush', async (ctx, next) => {
   const cmd = 'sh /root/api/update.sh'
-  exec(cmd)
+  exec(cmd, (err, stdout, stderr) => {
+    if (err) {
+      console.log(err)
+    }
+  })
   ctx.success(204)
 })
 
