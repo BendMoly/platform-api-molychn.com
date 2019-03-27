@@ -1,2 +1,6 @@
-push:
-	scp -r ./src root@47.75.185.174:/root/api/
+clean:
+	rm -rf ./src
+run:
+	pm2 restart npm
+log:
+	pm2 log npm
