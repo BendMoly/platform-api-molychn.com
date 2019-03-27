@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 import res from './utils/response'
 import configuration from './config/index'
 
-// mongodb暂不使用
+// mongodb暂不使用111
 // import db from './db'
 import mysql from './mysql'
 
@@ -20,6 +20,8 @@ import articles, {unauthArticles} from './apis/articles'
 import folders from './apis/folders'
 import upload from './apis/upload'
 import { upload_noauth } from './apis/upload'
+
+import git from './apis/git'
 
 const app = new Koa()
 app.use(bodyParser())
@@ -52,6 +54,7 @@ app.use(folders.routes())
 app.use(unauthArticles.routes())
 app.use(upload.routes())
 app.use(upload_noauth.routes())
+app.use(git.routes())
 
 export default app.listen(configuration.PORT, '0.0.0.0', () => {
   console.log(`app start at port ${configuration.PORT}`)
