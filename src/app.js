@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 import res from './utils/response'
 import configuration from './config/index'
 
-// mongodb暂不使用111
+// mongodb暂不使用
 // import db from './db'
 import mysql from './mysql'
 
