@@ -16,7 +16,7 @@ const sql = {
   // 插入文章
   insertArticle: 'INSERT INTO articles (uuid, title, folder, date, abstract, cover, content) VALUES (?, ?, ?, ?, ?, ?, ?)',
   // 文章列表查询
-  checkArticles: 'SELECT * FROM articles limit ?, ?',
+  checkArticles: 'SELECT * FROM articles limit ?, ? order by date desc',
   // 文章列表目录条件查询
   checkArticlesByFolder: 'SELECT * FROM articles WHERE folder = ? limit ?, ?',
   // 文章列表标题条件查询
